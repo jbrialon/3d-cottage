@@ -9,4 +9,9 @@ export default [
     type: "texture",
     path: "/models/cottage/baked.jpg",
   },
+  {
+    name: "audio",
+    type: "audio",
+    path: "/audio/audio.mp3",
+  },
 ];
