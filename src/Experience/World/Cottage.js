@@ -9,9 +9,20 @@ export default class Fox {
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
 
+    // Options
+    this.options = {
+      emissiveColor: new THREE.Color(0xff9141),
+    };
+
     // Debug
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder("Cottage");
+      this.debugFolder
+        .addColor(this.options, "emissiveColor")
+        .name("Windows Color")
+        .onChange(() => {
+          this.emissiveMaterial.color.set(this.options.emissiveColor);
+        });
     }
 
     // Setup
@@ -34,7 +45,9 @@ export default class Fox {
       side: THREE.DoubleSide,
     });
 
-    this.emissiveMaterial = new THREE.MeshBasicMaterial({ color: 0xff9141 });
+    this.emissiveMaterial = new THREE.MeshBasicMaterial({
+      color: this.options.emissiveColor,
+    });
   }
 
   setModel() {

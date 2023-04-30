@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Experience from "../Experience";
 import Environment from "./Environment";
 import Cottage from "./Cottage";
+import Smoke from "./Smoke";
 
 export default class World {
   constructor() {
@@ -13,9 +14,12 @@ export default class World {
     this.resources.on("ready", () => {
       // Setup
       this.cottage = new Cottage();
+      this.smoke = new Smoke();
       this.environment = new Environment();
     });
   }
 
-  update() {}
+  update() {
+    if (this.smoke) this.smoke.update();
+  }
 }

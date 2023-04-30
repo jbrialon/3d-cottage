@@ -16,13 +16,13 @@ export default class Camera {
 
   setInstance() {
     this.instance = new THREE.PerspectiveCamera(
-      65,
+      75,
       this.sizes.width / this.sizes.height,
       0.1,
       100
     );
 
-    this.instance.position.set(4, 2, 9);
+    this.instance.position.set(4, 2, 5);
     this.scene.add(this.instance);
   }
 
@@ -36,7 +36,7 @@ export default class Camera {
     this.controls.minPolarAngle = THREE.MathUtils.degToRad(30);
     this.controls.maxPolarAngle = THREE.MathUtils.degToRad(90);
 
-    this.controls.minDistance = 7;
+    this.controls.minDistance = 5;
   }
 
   resize() {
