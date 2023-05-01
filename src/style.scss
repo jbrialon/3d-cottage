@@ -59,6 +59,7 @@ body {
   background-size: 400% 400%;
   background-position: 0% 0%;
   transition: background 0.8s, box-shadow 0.3s;
+  opacity: 0;
 
   &:hover {
     --y: -1px;

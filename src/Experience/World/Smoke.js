@@ -8,6 +8,7 @@ export default class Smoke {
     this.debug = this.experience.debug;
     this.scene = this.experience.scene;
     this.camera = this.experience.camera.instance;
+    this.controls = this.experience.camera.controls;
     this.resources = this.experience.resources;
 
     // Options
@@ -39,6 +40,8 @@ export default class Smoke {
 
     this.setAudio();
     this.setGeometry();
+    this.setMaterial();
+    this.setMesh();
     // this.setMeshes();
   }
 
@@ -47,36 +50,59 @@ export default class Smoke {
     this.camera.add(listener);
 
     // create a global audio source
-    const sound = new THREE.Audio(listener);
+    this.sound = new THREE.Audio(listener);
 
     // load a sound and set it as the Audio object's buffer
-    sound.setBuffer(this.resources.items.audio);
-    sound.setLoop(true);
-    sound.setVolume(0.5);
+    this.sound.setBuffer(this.resources.items.audio);
+    this.sound.setLoop(true);
+    this.sound.setVolume(0.5);
 
     this.button.addEventListener("pointerdown", (e) => {
       if (this.button.classList.contains("playing")) {
         this.button.classList.remove("paused", "playing");
         this.button.classList.add("paused");
-        sound.pause();
+        this.pauseAudio();
       } else {
         if (this.button.classList.contains("paused")) {
           this.button.classList.add("playing");
-          sound.play();
+          this.playAudio();
         }
       }
       if (!this.button.classList.contains("paused")) {
         this.button.classList.add("paused");
-        sound.pause();
+        this.pauseAudio();
       }
     });
 
     // create an AudioAnalyser, passing in the sound and desired fftSize
-    this.analyser = new THREE.AudioAnalyser(sound, 32);
+    this.analyser = new THREE.AudioAnalyser(this.sound, 32);
+  }
+
+  playAudio() {
+    this.sound.play();
+    setTimeout(() => {
+      this.controls.autoRotate = true;
+    }, 4000);
+  }
+
+  pauseAudio() {
+    this.controls.autoRotate = false;
+    this.sound.pause();
   }
 
   setGeometry() {
     this.geometry = new THREE.IcosahedronGeometry(0.1, 0);
+  }
+
+  setMaterial() {
+    this.material = new THREE.MeshBasicMaterial({
+      color: this.options.smokeColor,
+      transparent: true,
+    });
+  }
+
+  setMesh() {
+    this.mesh = new THREE.Mesh(this.geometry, this.material);
   }
 
   setMeshes() {
@@ -140,18 +166,14 @@ export default class Smoke {
     }
   }
 
-  smoke() {
+  smoke(intensity) {
     this.animated = true;
     setTimeout(() => {
       this.animated = false;
     }, 350);
-    const smoke = new THREE.Mesh(
-      this.geometry,
-      new THREE.MeshBasicMaterial({
-        color: this.options.smokeColor,
-        transparent: true,
-      })
-    );
+
+    const smoke = new THREE.Mesh(this.geometry, this.material.clone());
+
     smoke.rotation.x = Math.random() * Math.PI * 2;
     smoke.rotation.y = Math.random() * Math.PI * 2;
 
@@ -160,11 +182,15 @@ export default class Smoke {
     this.scene.add(smoke);
 
     // define random numbers for scaling and position
-    const scaleTo = Math.random() * 2.5 + 1;
+    const scaleTo = intensity * 2 * 10 * 2.5 + 1;
     const yTo = 5;
 
     // animate the smoke using GSAP
-    const tl = gsap.timeline();
+    const tl = gsap.timeline({
+      onComplete: () => {
+        this.scene.remove(smoke);
+      },
+    });
     tl.fromTo(
       smoke.scale,
       { x: 1, y: 1, z: 1 },
@@ -201,8 +227,8 @@ export default class Smoke {
       (this.analyser.getFrequencyData()[2] / 255) * 0.85,
       8
     );
-    if (analysis > 0.013 && !this.animated) {
-      this.smoke();
+    if (analysis > 0.011 && !this.animated) {
+      this.smoke(analysis);
     }
   }
 }

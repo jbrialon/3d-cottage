@@ -14,7 +14,7 @@ export default class Loader {
     this.options = {};
 
     this.button = document.querySelector(".js-button");
-    gsap.set(this.button, { y: "100px", x: "-50%" });
+    gsap.set(this.button, { y: "100px", x: "-50%", autoAlpha: 0 });
 
     // Setup
     this.setGeometry();
@@ -51,7 +51,13 @@ export default class Loader {
         this.destroy();
       },
     });
-    gsap.to(this.button, { y: 0, x: "-50%", delay: 1, duration: 1 });
+    gsap.to(this.button, {
+      y: 0,
+      x: "-50%",
+      autoAlpha: 1,
+      delay: 1,
+      duration: 1,
+    });
   }
 
   destroy() {
