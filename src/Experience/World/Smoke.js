@@ -17,6 +17,8 @@ export default class Smoke {
       x: -0.35,
       y: 3.05,
       z: -1.05,
+      frequency: 350,
+      threshold: 0.011,
     };
 
     this.animated = false;
@@ -33,9 +35,21 @@ export default class Smoke {
         .onChange(() => {
           this.material.color.set(this.options.smokeColor);
         });
+      this.debugFolder
+        .add(this.options, "frequency")
+        .min(50)
+        .max(1000)
+        .step(1)
+        .name("Smoke Frequency");
+      this.debugFolder
+        .add(this.options, "threshold")
+        .min(0.005)
+        .max(0.02)
+        .step(0.0001)
+        .name("Audio Threshold");
     }
 
-    // Steup
+    // Setup
     this.meshes = [];
 
     this.setAudio();
@@ -170,7 +184,7 @@ export default class Smoke {
     this.animated = true;
     setTimeout(() => {
       this.animated = false;
-    }, 350);
+    }, this.options.frequency);
 
     const smoke = new THREE.Mesh(this.geometry, this.material.clone());
 
@@ -227,7 +241,7 @@ export default class Smoke {
       (this.analyser.getFrequencyData()[2] / 255) * 0.85,
       8
     );
-    if (analysis > 0.011 && !this.animated) {
+    if (analysis > this.options.threshold && !this.animated) {
       this.smoke(analysis);
     }
   }

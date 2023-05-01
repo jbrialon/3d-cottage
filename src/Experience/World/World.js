@@ -4,6 +4,7 @@ import Environment from "./Environment";
 import Loader from "./Loader";
 import Cottage from "./Cottage";
 import Smoke from "./Smoke";
+import Stars from "./Stars";
 
 export default class World {
   constructor() {
@@ -17,6 +18,7 @@ export default class World {
       // Setup
       this.cottage = new Cottage();
       this.smoke = new Smoke();
+      this.stars = new Stars();
       this.environment = new Environment();
 
       // Show Experience
@@ -25,6 +27,7 @@ export default class World {
   }
 
   update() {
+    if (this.stars) this.stars.update();
     if (this.smoke) this.smoke.update();
   }
 }
