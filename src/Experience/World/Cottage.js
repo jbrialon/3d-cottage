@@ -11,7 +11,7 @@ export default class Cottage {
 
     // Options
     this.options = {
-      emissiveColor: new THREE.Color(0xff9141),
+      emissiveColor: new THREE.Color(0xf9be7b),
     };
 
     // Debug

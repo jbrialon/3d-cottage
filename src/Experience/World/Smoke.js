@@ -55,7 +55,7 @@ export default class Smoke {
     this.setAudio();
     this.setGeometry();
     this.setMaterial();
-    this.setMesh();
+    // this.setMesh();
     // this.setMeshes();
   }
 
@@ -180,7 +180,7 @@ export default class Smoke {
     }
   }
 
-  smoke(intensity) {
+  createSmokeCloud(intensity) {
     this.animated = true;
     setTimeout(() => {
       this.animated = false;
@@ -242,7 +242,7 @@ export default class Smoke {
       8
     );
     if (analysis > this.options.threshold && !this.animated) {
-      this.smoke(analysis);
+      this.createSmokeCloud(analysis);
     }
   }
 }
