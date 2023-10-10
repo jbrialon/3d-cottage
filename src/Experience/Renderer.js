@@ -15,6 +15,32 @@ export default class Renderer {
       clearColor: "#201919",
     };
 
+    this.setDebug();
+    this.setInstance();
+  }
+
+  setInstance() {
+    this.instance = new THREE.WebGLRenderer({
+      canvas: this.canvas,
+      antialias: true,
+      alpha: true,
+      powerPreference: "high-performance",
+    });
+
+    this.instance.outputEncoding = THREE.sRGBEncoding;
+    this.instance.shadowMap.enabled = true;
+    this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
+    // this.instance.setClearColor(this.options.clearColor);
+    this.instance.setSize(this.sizes.width, this.sizes.height);
+    this.instance.setPixelRatio(this.sizes.pixelRatio);
+  }
+
+  resize() {
+    this.instance.setSize(this.sizes.width, this.sizes.height);
+    this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
+  }
+
+  setDebug() {
     // Debug
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder("World");
@@ -25,30 +51,7 @@ export default class Renderer {
           this.instance.setClearColor(this.options.clearColor);
         });
     }
-
-    this.setInstance();
   }
-
-  setInstance() {
-    this.instance = new THREE.WebGLRenderer({
-      canvas: this.canvas,
-      antialias: true,
-      powerPreference: "high-performance",
-    });
-
-    this.instance.outputEncoding = THREE.sRGBEncoding;
-    this.instance.shadowMap.enabled = true;
-    this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
-    this.instance.setClearColor(this.options.clearColor);
-    this.instance.setSize(this.sizes.width, this.sizes.height);
-    this.instance.setPixelRatio(this.sizes.pixelRatio);
-  }
-
-  resize() {
-    this.instance.setSize(this.sizes.width, this.sizes.height);
-    this.instance.setPixelRatio(Math.min(this.sizes.pixelRatio, 2));
-  }
-
   update() {
     this.instance.render(this.scene, this.camera.instance);
   }

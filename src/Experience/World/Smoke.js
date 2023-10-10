@@ -10,6 +10,7 @@ export default class Smoke {
     this.camera = this.experience.camera.instance;
     this.controls = this.experience.camera.controls;
     this.resources = this.experience.resources;
+    this.streamMode = this.experience.streamMode;
 
     // Options
     this.options = {
@@ -26,37 +27,19 @@ export default class Smoke {
     this.button = document.querySelector(".js-button");
     this.button.classList.remove("hidden");
 
-    // Debug
-    if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Smoke");
-      this.debugFolder
-        .addColor(this.options, "smokeColor")
-        .name("Smoke Color")
-        .onChange(() => {
-          this.material.color.set(this.options.smokeColor);
-        });
-      this.debugFolder
-        .add(this.options, "frequency")
-        .min(50)
-        .max(1000)
-        .step(1)
-        .name("Smoke Frequency");
-      this.debugFolder
-        .add(this.options, "threshold")
-        .min(0.005)
-        .max(0.02)
-        .step(0.0001)
-        .name("Audio Threshold");
-    }
-
     // Setup
     this.meshes = [];
 
+    this.setDebug();
     this.setAudio();
     this.setGeometry();
     this.setMaterial();
     // this.setMesh();
     // this.setMeshes();
+
+    if (this.streamMode.active) {
+      this.playAudio();
+    }
   }
 
   setAudio() {
@@ -72,24 +55,28 @@ export default class Smoke {
     this.sound.setVolume(0.5);
 
     this.button.addEventListener("pointerdown", (e) => {
-      if (this.button.classList.contains("playing")) {
-        this.button.classList.remove("paused", "playing");
-        this.button.classList.add("paused");
-        this.pauseAudio();
-      } else {
-        if (this.button.classList.contains("paused")) {
-          this.button.classList.add("playing");
-          this.playAudio();
-        }
-      }
-      if (!this.button.classList.contains("paused")) {
-        this.button.classList.add("paused");
-        this.pauseAudio();
-      }
+      this.onButtonClick(e);
     });
 
     // create an AudioAnalyser, passing in the sound and desired fftSize
     this.analyser = new THREE.AudioAnalyser(this.sound, 32);
+  }
+
+  onButtonClick() {
+    if (this.button.classList.contains("playing")) {
+      this.button.classList.remove("paused", "playing");
+      this.button.classList.add("paused");
+      this.pauseAudio();
+    } else {
+      if (this.button.classList.contains("paused")) {
+        this.button.classList.add("playing");
+        this.playAudio();
+      }
+    }
+    if (!this.button.classList.contains("paused")) {
+      this.button.classList.add("paused");
+      this.pauseAudio();
+    }
   }
 
   playAudio() {
@@ -236,6 +223,32 @@ export default class Smoke {
         "-=1"
       );
   }
+
+  setDebug() {
+    // Debug
+    if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder("Smoke");
+      this.debugFolder
+        .addColor(this.options, "smokeColor")
+        .name("Smoke Color")
+        .onChange(() => {
+          this.material.color.set(this.options.smokeColor);
+        });
+      this.debugFolder
+        .add(this.options, "frequency")
+        .min(50)
+        .max(1000)
+        .step(1)
+        .name("Smoke Frequency");
+      this.debugFolder
+        .add(this.options, "threshold")
+        .min(0.005)
+        .max(0.02)
+        .step(0.0001)
+        .name("Audio Threshold");
+    }
+  }
+
   update() {
     let analysis = Math.pow(
       (this.analyser.getFrequencyData()[2] / 255) * 0.85,

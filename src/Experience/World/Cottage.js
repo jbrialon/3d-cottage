@@ -14,21 +14,11 @@ export default class Cottage {
       emissiveColor: new THREE.Color(0xf9be7b),
     };
 
-    // Debug
-    if (this.debug.active) {
-      this.debugFolder = this.debug.ui.addFolder("Cottage");
-      this.debugFolder
-        .addColor(this.options, "emissiveColor")
-        .name("Windows Color")
-        .onChange(() => {
-          this.emissiveMaterial.color.set(this.options.emissiveColor);
-        });
-    }
-
     // Setup
     this.resource = this.resources.items.cottageModel;
     this.bakedTexture = this.resources.items.bakedTexture;
 
+    this.setDebug();
     this.setTexture();
     this.setMaterial();
     this.setModel();
@@ -66,5 +56,18 @@ export default class Cottage {
     });
 
     this.scene.add(this.model);
+  }
+
+  setDebug() {
+    // Debug
+    if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder("Cottage");
+      this.debugFolder
+        .addColor(this.options, "emissiveColor")
+        .name("Windows Color")
+        .onChange(() => {
+          this.emissiveMaterial.color.set(this.options.emissiveColor);
+        });
+    }
   }
 }

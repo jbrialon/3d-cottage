@@ -4,6 +4,7 @@ import Sizes from "./Utils/Sizes.js";
 import Time from "./Utils/Time.js";
 import Resources from "./Utils/Resources.js";
 import Debug from "./Utils/Debug.js";
+import StreamMode from "./Utils/StreamMode.js";
 import Stats from "./Utils/Stats.js";
 
 import Camera from "./Camera.js";
@@ -31,6 +32,7 @@ export default class Experience {
 
     // Setup
     this.debug = new Debug();
+    this.streamMode = new StreamMode();
     this.stats = new Stats();
     this.sizes = new Sizes();
     this.time = new Time();
