@@ -27,7 +27,7 @@ export default class Renderer {
       powerPreference: "high-performance",
     });
 
-    this.instance.outputEncoding = THREE.sRGBEncoding;
+    this.instance.outputColorSpace = THREE.SRGBColorSpace;
     this.instance.shadowMap.enabled = true;
     this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
     // this.instance.setClearColor(this.options.clearColor);
