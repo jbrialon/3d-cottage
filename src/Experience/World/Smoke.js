@@ -10,7 +10,6 @@ export default class Smoke {
     this.camera = this.experience.camera.instance;
     this.controls = this.experience.camera.controls;
     this.resources = this.experience.resources;
-    this.streamMode = this.experience.streamMode;
 
     // Options
     this.options = {
@@ -34,12 +33,6 @@ export default class Smoke {
     this.setAudio();
     this.setGeometry();
     this.setMaterial();
-    // this.setMesh();
-    // this.setMeshes();
-
-    if (this.streamMode.active) {
-      this.playAudio();
-    }
   }
 
   setAudio() {

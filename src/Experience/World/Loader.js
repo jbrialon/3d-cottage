@@ -9,14 +9,12 @@ export default class Loader {
   constructor() {
     this.experience = new Experience();
     this.scene = this.experience.scene;
-    this.streamMode = this.experience.streamMode;
 
     // Options
     this.options = {};
 
     this.button = document.querySelector(".js-button");
     gsap.set(this.button, { y: "100px", x: "-50%", autoAlpha: 0 });
-    gsap.set(this.streamMode.text, { autoAlpha: 0 });
 
     // Setup
     this.setGeometry();
@@ -54,21 +52,13 @@ export default class Loader {
       },
     });
 
-    if (this.streamMode.active) {
-      gsap.to(this.streamMode.text, {
-        autoAlpha: 1,
-        duration: 1,
-        delay: 1,
-      });
-    } else {
-      gsap.to(this.button, {
-        y: 0,
-        x: "-50%",
-        autoAlpha: 1,
-        delay: 1,
-        duration: 1,
-      });
-    }
+    gsap.to(this.button, {
+      y: 0,
+      x: "-50%",
+      autoAlpha: 1,
+      delay: 1,
+      duration: 1,
+    });
   }
 
   destroy() {
