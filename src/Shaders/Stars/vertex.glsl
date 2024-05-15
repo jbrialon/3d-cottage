@@ -12,7 +12,7 @@ void main() {
   
   float size = uSize * uPixelRatio * aScale;
   gl_Position = projectionPosition;
-  // gl_PointSize = sin(uTime + size) * 200.0;
-  gl_PointSize = size;
+  gl_PointSize = sin(uTime / 2.0 + size) * 200.0;
+  // gl_PointSize = size;
   gl_PointSize *= (1.0 / - viewPosition.z);
 }

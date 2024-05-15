@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import { gsap } from "gsap";
+
 import Experience from "../Experience";
 
 import vertexShader from "../../Shaders/Stars/vertex.glsl";
@@ -52,8 +54,14 @@ export default class Stars {
       depthWrite: false,
       uniforms: {
         uTime: { value: 0 },
+        uAlpha: {
+          value: 0,
+        },
         uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
         uSize: { value: 100 },
+        uColor: {
+          value: new THREE.Color(0xffd884),
+        },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -66,6 +74,12 @@ export default class Stars {
     this.scene.add(this.points);
   }
 
+  show() {
+    gsap.to(this.material.uniforms.uAlpha, {
+      value: 1,
+      duration: 1.5,
+    });
+  }
   update() {
     this.material.uniforms.uTime.value = this.time.elapsedTime;
   }

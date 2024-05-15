@@ -51,6 +51,7 @@ export default class Loader {
       value: 0,
       ease: "power4.inOut",
       onComplete: () => {
+        this.experience.world.stars.show();
         this.destroy();
       },
     });
