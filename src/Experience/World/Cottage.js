@@ -11,7 +11,7 @@ export default class Cottage {
 
     // Options
     this.options = {
-      emissiveColor: new THREE.Color(0xf9be7b),
+      emissiveColor: 0xf9be7b,
     };
 
     // Setup
@@ -26,7 +26,7 @@ export default class Cottage {
 
   setTexture() {
     this.bakedTexture.flipY = false;
-    this.bakedTexture.encoding = THREE.sRGBEncoding;
+    this.bakedTexture.colorSpace = THREE.SRGBColorSpace;
   }
 
   setMaterial() {

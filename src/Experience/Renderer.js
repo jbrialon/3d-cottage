@@ -12,7 +12,7 @@ export default class Renderer {
 
     // Options
     this.options = {
-      clearColor: "#201919",
+      clearColor: 0x201919,
     };
 
     this.setDebug();
@@ -27,8 +27,9 @@ export default class Renderer {
       powerPreference: "high-performance",
     });
 
+    THREE.ColorManagement.enabled = true;
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
-    this.instance.shadowMap.enabled = true;
+    this.instance.shadowMap.enabled = false;
     this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
     // this.instance.setClearColor(this.options.clearColor);
     this.instance.setSize(this.sizes.width, this.sizes.height);

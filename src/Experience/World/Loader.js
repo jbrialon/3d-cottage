@@ -31,6 +31,9 @@ export default class Loader {
       transparent: true,
       uniforms: {
         uAlpha: { value: 1 },
+        uColor: {
+          value: new THREE.Color(0x201919),
+        },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
