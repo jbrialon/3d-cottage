@@ -23,15 +23,13 @@ export default class Renderer {
     this.instance = new THREE.WebGLRenderer({
       canvas: this.canvas,
       antialias: true,
-      alpha: true,
+      alpha: false,
       powerPreference: "high-performance",
     });
 
     THREE.ColorManagement.enabled = true;
     this.instance.outputColorSpace = THREE.SRGBColorSpace;
-    this.instance.shadowMap.enabled = false;
-    this.instance.shadowMap.type = THREE.PCFSoftShadowMap;
-    // this.instance.setClearColor(this.options.clearColor);
+    this.instance.setClearColor(this.options.clearColor);
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
   }

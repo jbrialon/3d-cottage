@@ -1,11 +1,3 @@
-@font-face {
-  font-family: "cartograph_cfbold_italic";
-  src: url("/fonts/cartographcf-bolditalic-webfont.woff2") format("woff2"),
-    url("/fonts/cartographcf-bolditalic-webfont.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +13,6 @@ body {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
-  background: #201919;
 }
 
 .webgl {
@@ -30,36 +21,6 @@ body {
   left: 0;
   outline: none;
   z-index: 10;
-}
-
-.text {
-  position: absolute;
-  top: 50%;
-  left: 2vw;
-  right: 2vw;
-  transform: translateY(-50%);
-  color: #dcd6a6;
-  font-family: "cartograph_cfbold_italic";
-  pointer-events: none;
-  font-size: 13vw;
-  line-height: 1.2;
-  font-weight: 300;
-  text-align: center;
-  letter-spacing: 0.55vw;
-}
-
-.text-front {
-  z-index: 20;
-  -moz-text-stroke-color: #dcd6a6;
-  -webkit-text-stroke-color: #dcd6a6;
-  -moz-text-stroke-width: 0.085vw;
-  -webkit-text-stroke-width: 0.085vw;
-  -moz-text-fill-color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-back {
-  z-index: 1;
 }
 
 .play-pause-button {
